@@ -31,6 +31,19 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect(RouteServiceProvider::HOME);
     }
 
+    public function test_users_can_authenticate_on_api(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->post('/api/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertNoContent();
+    }
+
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
         $user = User::factory()->create();
@@ -51,5 +64,15 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
         $response->assertRedirect('/');
+    }
+
+    public function test_users_can_logout_on_api(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('/api/logout');
+
+        $this->assertGuest();
+        $response->assertNoContent();
     }
 }
