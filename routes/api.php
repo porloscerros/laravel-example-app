@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 /*****************
  * Greetings
  *****************/
-Route::get('/', function() {
+Route::get('/', function () {
     return response()->json([
         'greetings' => 'Welcome to '.config('app.name').' API',
         'authenticate' => url('api/login'),
@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 /*****************
  * API v1
  *****************/
-Route::group(['prefix' => 'v1'], function() {
+Route::group(['prefix' => 'v1'], function () {
     /*****************
      * Public API
      *****************/
