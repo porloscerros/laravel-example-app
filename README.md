@@ -18,24 +18,28 @@ laravelsail/php83-composer:latest \
 composer install --ignore-platform-reqs
 ```
 
-3. Start docker.
+
+3. Set the `.env` from `env.example`.
+```bash
+cp .env.example .env
+```
+
+4. Start docker.
 ```bash
 ./vendor/bin/sail up
 ```
 
-4. Set the `.env` file and modify by your requirements.
+5. Generate `.env` `APP_KEY` variable.
 ```bash
-cp .env.example .env
-
 ./vendor/bin/sail artisan key:generate
 ```
 
-5. Run migrations.
+6. Run migrations.
 ```bash
 ./vendor/bin/sail artisan migrate
 ```
 
-6. Install node dependencies and build.
+7. Install node dependencies and build.
 ```bash
 ./vendor/bin/sail yarn
 
