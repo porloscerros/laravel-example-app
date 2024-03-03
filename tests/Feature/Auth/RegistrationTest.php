@@ -28,7 +28,20 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
-        // Use following for API test.
-        // $response->assertNoContent();
+    }
+
+    public function test_new_users_can_register_on_api(): void
+    {
+        $response = $this->post('/register', [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ], [
+            'Accept' => 'application/json',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertNoContent();
     }
 }

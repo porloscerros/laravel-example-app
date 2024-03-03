@@ -35,9 +35,11 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->post('/api/login', [
+        $response = $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
+        ], [
+            'Accept' => 'application/json',
         ]);
 
         $this->assertAuthenticated();
@@ -70,7 +72,9 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->post('/api/logout');
+        $response = $this->actingAs($user)->post('/logout', [], [
+            'Accept' => 'application/json',
+        ]);
 
         $this->assertGuest();
         $response->assertNoContent();

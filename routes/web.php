@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (Request $request) {
+    return $request->expectsJson()
+        ? [
+            'greetings' => 'Welcome to '.config('app.name'),
+            'api' => url('api'),
+            'authenticate' => url('login'),
+        ]
+        : view('welcome');
 });
 
 Route::get('/dashboard', function () {

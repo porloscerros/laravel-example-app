@@ -19,12 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return response()->json([
         'greetings' => 'Welcome to '.config('app.name').' API',
-        'authenticate' => url('api/login'),
+        'authenticate' => url('login'),
         'current_api_version' => config('app.current_api_version', 1),
     ]);
 })->name('greetings');
-
-require __DIR__.'/auth-api.php';
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
