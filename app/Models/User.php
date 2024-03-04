@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
+        'google_refresh_token',
     ];
 
     /**
@@ -33,6 +34,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'google_id',
+        'google_refresh_token',
     ];
 
     /**

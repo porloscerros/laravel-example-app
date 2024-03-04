@@ -13,7 +13,11 @@ class GoogleController
 
     public function redirect()
     {
-        return Socialite::driver('google')->redirect();
+        $parameters = ['access_type' => 'offline'];
+        return Socialite::driver('google')
+            ->scopes(config('google_apis.scopes'))
+            ->with($parameters)
+            ->redirect();
     }
 
     public function googleCallback()
@@ -28,6 +32,7 @@ class GoogleController
         if($user = User::where('email', $googleUser->email)->first()) {
             $user->update([
                 'google_id' => $googleUser->id,
+                'google_refresh_token' => $googleUser->refreshToken,
             ]);
         }
         else {
@@ -37,7 +42,7 @@ class GoogleController
                 'password' => Hash::make(Str::random(8)),
                 'google_id' => $googleUser->id,
                 // 'google_token' => $googleUser->token,
-                // 'google_refresh_token' => $googleUser->refreshToken,
+                'google_refresh_token' => $googleUser->refreshToken,
             ]);
         }
 
