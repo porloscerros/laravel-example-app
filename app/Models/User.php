@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -21,8 +22,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'google_id',
-        'google_refresh_token',
     ];
 
     /**
@@ -33,8 +32,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'google_id',
-        'google_refresh_token',
     ];
 
     /**
@@ -46,4 +43,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the social providers the user has.
+     */
+    public function providers(): HasMany
+    {
+        return $this->hasMany(Provider::class);
+    }
 }
